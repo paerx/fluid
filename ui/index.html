@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <base href="./" />
+    <title>FLUID</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="bg-layer bg-layer-a"></div>
+      <div class="bg-layer bg-layer-b"></div>
+      <div class="noise"></div>
+
+      <div id="authFlow" class="auth-flow visible">
+        <section id="authCard" class="auth-card glass auth-card-token">
+          <div class="brand-row">
+            <div class="brand">FLUID</div>
+            <div class="brand-mark">g</div>
+          </div>
+          <div id="tokenStage" class="auth-stage auth-stage-token">
+            <h1>need your Token</h1>
+            <p>Connect the embedded SDK, unlock live runtime telemetry, and enter the glass dashboard.</p>
+            <label class="token-label">
+              <span>Authorization Token</span>
+              <input id="tokenInput" type="password" placeholder="Bearer token or localhost blank" />
+            </label>
+            <button id="tokenSubmit" class="cta">
+              <span>Continue</span>
+              <span class="cta-arrow"></span>
+            </button>
+            <p id="authError" class="error-text"></p>
+          </div>
+
+          <div id="scanStage" class="auth-stage auth-stage-scan">
+            <div class="face-frame">
+              <img id="faceImage" src="./assets/face-id.png" alt="Face ID" />
+            </div>
+            <p id="faceHint">Face ID handshake in progress</p>
+          </div>
+        </section>
+      </div>
+
+      <main id="dashboard" class="dashboard hidden">
+        <header class="topbar">
+          <div class="brand-row">
+            <div class="brand">FLUID</div>
+            <div class="brand-mark">g</div>
+          </div>
+          <nav class="nav">
+            <button class="nav-link active" data-page="overview">Overview</button>
+            <button class="nav-link" data-page="goroutines">Goroutines</button>
+          </nav>
+        </header>
+
+        <section id="overview" class="page active">
+          <div class="metrics-row">
+            <article class="glass hero-metric metric-cluster">
+              <div class="metric">
+                <span class="metric-label">Goroutines</span>
+                <strong id="overviewGoroutines">0</strong>
+                <span id="overviewGTrend" class="metric-trend">0/min</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">Heap Inuse</span>
+                <strong id="overviewHeap">0 MB</strong>
+                <span id="overviewHeapTrend" class="metric-trend">0/min</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">Gc p95</span>
+                <strong id="overviewGC">0 ms</strong>
+                <span id="overviewGCStatus" class="metric-trend">stable</span>
+              </div>
+            </article>
+
+            <article class="glass hero-metric side-cluster">
+              <div class="metric">
+                <span class="metric-label">CPU</span>
+                <strong id="overviewCPU">0%</strong>
+                <span id="overviewCPUTrend" class="metric-trend">avg 0%</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">Server time</span>
+                <strong id="overviewTime">--:--:--</strong>
+                <span id="overviewDate" class="metric-trend">----</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="panel-grid">
+            <article class="glass panel top-groups">
+              <div class="panel-title">Top Groups</div>
+              <div id="groupList" class="group-list"></div>
+            </article>
+
+            <article class="glass panel stack-detail">
+              <div class="panel-title">Stack Details</div>
+              <div id="stackDetail" class="stack-detail-content"></div>
+            </article>
+
+            <article class="glass panel cpu-panel">
+              <div class="panel-title">vCPU</div>
+              <div id="cpuGrid" class="cpu-grid"></div>
+              <div id="cpuText" class="cpu-text">0 / 0</div>
+              <div class="cpu-legend">If there is a process in the core it is marked as in use.</div>
+            </article>
+          </div>
+        </section>
+
+        <section id="goroutines" class="page">
+          <div class="goroutine-top">
+            <article class="glass compact-kpi">
+              <span class="metric-label">Goroutines</span>
+              <strong id="goroutinesKpi">0</strong>
+              <span id="goroutinesTrend" class="metric-trend">0/min</span>
+            </article>
+
+            <article class="glass pipeline-panel">
+              <canvas id="pipelineCanvas" width="1100" height="180"></canvas>
+              <div class="pipe-caption">Auto Rolling</div>
+            </article>
+          </div>
+
+          <article class="glass chart-panel">
+            <canvas id="goroutinesChart" width="1400" height="520"></canvas>
+            <div class="chart-axis chart-left">15m ago</div>
+            <div class="chart-axis chart-right">now</div>
+          </article>
+        </section>
+
+      </main>
+    </div>
+    <script src="./app.js" type="module"></script>
+  </body>
+  </html>
